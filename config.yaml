@@ -1,0 +1,17 @@
+hostname: vps.vagrant.local
+private_ip: 192.168.56.101
+use_nfs: 1
+disk_size: 36GB
+memory_size: 4096
+cpu_number: 2
+
+vhosts_fixed:
+  - vagrant.local
+  - domain-a.local
+vhosts_virtual:
+  - magento.local
+  - akeneo.local
+
+
+
+
