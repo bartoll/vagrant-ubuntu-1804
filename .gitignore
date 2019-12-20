@@ -1,2 +1,4 @@
 .vagrant/
 guest_www/vagrant/
+
+!guest_www/vagrant/.gitkeep
