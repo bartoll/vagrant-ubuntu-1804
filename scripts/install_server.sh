@@ -9,7 +9,7 @@ sudo timedatectl set-timezone 'Europe/Warsaw'
 sudo apt-get update
 
 # Install system tools
-sudo -u root -H apt-get install -y apt-rdepends mc curl meld git jq
+sudo -u root -H apt-get install -y apt-rdepends mc curl git jq
 
 # install Apache 2.4
 sudo apt-get install -y apache2
@@ -34,6 +34,20 @@ sudo apt-get install -y php7.2-dev
 sudo apt-get install -y gcc make autoconf libc-dev pkg-config
 sudo apt-get install -y libmcrypt-dev
 println "\n" | sudo pecl install mcrypt-1.0.1
+
+# Install xdebug
+sudo apt-get install -y php7.2-dev autoconf automake
+cd $HOME
+wget http://xdebug.org/files/xdebug-2.9.0.tgz
+tar -xvzf xdebug-2.9.0.tgz
+cd xdebug-2.9.0
+phpize
+./configure
+make
+sudo chown root:root modules/xdebug.so && sudo mv modules/xdebug.so /usr/lib/php/20170718
+sudo bash -c "echo 'zend_extension = /usr/lib/php/20170718/xdebug.so' > /etc/php/7.2/mods-available/xdebug.ini"
+sudo phpenmod xdebug
+rm -rf ../xdebug-2.9.0 && rm xdebug-2.9.0.tgz && cd $HOME
 
 # Enable modules
 sudo a2enmod proxy_fcgi vhost_alias rewrite ssl setenvif macro info status

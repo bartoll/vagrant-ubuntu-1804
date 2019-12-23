@@ -35,9 +35,7 @@ function add_new_vhost () {
 
     ' $file > $tempfile && sudo mv "$tempfile" "$file"
 
-    # Create new vhost's directory
-    sudo mkdir -p /var/www/$pool/$domain
-    #sudo chown -R ${pool}:${pool} /var/www/$pool/$domain
+    local vhost_path="/var/www/$pool/$domain"
   fi
 
   # Add virtual-root host entry
@@ -56,14 +54,18 @@ function add_new_vhost () {
 
       ' $file > $tempfile && sudo mv "$tempfile" "$file"
 
-    # Create new vhost's directory
-    sudo mkdir -p /var/www/$pool/demo1.${domain}
-    #sudo chown -R ${pool}:${pool} /var/www/$pool/demo1.${domain}
+    local vhost_path="/var/www/$pool/demo1.${domain}"
+  fi
 
-    # Add index.php file
-    cd /var/www/$pool/demo1.${domain}
+  # Create new vhost's directory
+  sudo mkdir -p "$vhost_path"
+
+  # When it is new folder add index.php file and set proper permission
+  if [ -z "$(ls -A $vhost_path)" ]; then
+    cd "$vhost_path"
     sudo echo "<?php
       phpinfo();" > index.php
+    sudo chown -R ${pool}:${pool} "$vhost_path"
   fi
 }
 
