@@ -19,7 +19,7 @@ sudo a2enconf vhosts-permissions.conf
 
 # Allow remote access for mysql
 query="
-CREATE USER '${mysql_username}'@'${subnet}' IDENTIFIED BY '$mysql_password' REQUIRE NONE PASSWORD EXPIRE DEFAULT ACCOUNT UNLOCK;
+CREATE USER IF NOT EXISTS '${mysql_username}'@'${subnet}' IDENTIFIED BY '$mysql_password' REQUIRE NONE PASSWORD EXPIRE DEFAULT ACCOUNT UNLOCK;
 GRANT ALL PRIVILEGES ON *.* TO '${mysql_username}'@'${subnet}' WITH GRANT OPTION;
 GRANT PROXY ON ''@'' TO '${mysql_username}'@'${subnet}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
